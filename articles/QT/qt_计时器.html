@@ -68,15 +68,52 @@
   <div class="row">
     <div class="col-md-8 blog-main">
       <div class="blog-post">
-        <h2 class="blog-post-title">QT</h2>
+        <h2 class="blog-post-title">QT计时器</h2>
         <hr>
         <p>
-        	<ul>
-        		<li><a href="qt_计时器.html">QT计时器</a></li>
-        		<li><a href="https://www.w3.org/">QT222222222</a></li>
-        		<li><a href="https://www.w3.org/">QT3333</a></li>
-        		<li><a href="https://www.w3.org/">QT4444</a></li>
-        	</ul>
+1.头文件声明一个QTimer的指针
+
+<pre  class = "bg-light">
+
+#include &lt;QApplication&gt;
+#include &lt;QPushButton&gt;
+ 
+class MyWindow : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    MyWindow(QWidget *parent = Q_NULLPTR);
+
+...
+private:
+    QTimer* TimerHandle_RefreshTime;
+    void RefreshTime();
+
+};
+
+  </pre>
+
+2.cpp实现
+<pre class="bg-light">
+// 计时器-刷新左下角时间
+TimerHandle_RefreshTime = new QTimer(this);
+TimerHandle_RefreshTime->start();
+TimerHandle_RefreshTime->setInterval(1000);
+connect(TimerHandle_RefreshTime, &QTimer::timeout, this, &MyWindow::RefreshTime);
+  </pre>
+<pre class="bg-light">
+/// &lt;summary&gt;
+/// 刷新时间文字
+/// &lt;/summary&gt;
+void MyWindow::RefreshTime()
+{
+  QDateTime dateTime = QDateTime::currentDateTime();
+  QString s_dateTime = dateTime.toString(QString::fromLocal8Bit("yyyy年MM月dd日 hh:mm:ss"));
+  ui.label_myTime->setText(s_dateTime);
+}
+  </pre>
+
 		</p>
       </div><!-- /.blog-post -->
 
